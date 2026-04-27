@@ -14,7 +14,7 @@ from typing import Annotated, Optional
 import typer
 from dotenv import load_dotenv
 
-from gh_query.github import GitHubAPIError, execute_graphql
+from gh_query.github import GitHubAPIError, build_search_graphql, execute_graphql
 from gh_query.llm import LLMError, call_llm
 
 
@@ -55,18 +55,21 @@ def query(
         _fail("GITHUB_TOKEN not set in environment", code=2)
 
     if raw is not None:
-        graphql = raw
+        graphql, variables = raw, None
     else:
         try:
-            graphql = call_llm(model, nl)
+            params = call_llm(model, nl)
         except LLMError as e:
             _fail(f"LLM call failed: {e}", code=1)
+        graphql, variables = build_search_graphql(params)
+        if show_query:
+            print(params.model_dump_json(indent=2), file=sys.stderr)
 
-    if show_query:
+    if show_query and raw is not None:
         print(graphql, file=sys.stderr)
 
     try:
-        data = execute_graphql(graphql, token)
+        data = execute_graphql(graphql, token, variables=variables)
     except GitHubAPIError as e:
         _fail(f"GitHub API error: {e}", code=1)
 

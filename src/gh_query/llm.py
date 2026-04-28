@@ -39,6 +39,7 @@ class SearchParams(BaseModel):
     Validated by Pydantic on every LLM response. Any deviation (missing
     field, wrong type, out-of-range first, unknown SearchType) raises
     ValidationError and is wrapped into LLMError by the caller.
+
     """
 
     search_query: str = Field(..., min_length=1)

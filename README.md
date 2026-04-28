@@ -27,7 +27,7 @@ cp .env.example .env
 
 For Ollama: install from <https://ollama.com>, then `ollama pull qwen3.5:9b`.
 
-## 3. CLI usage
+## 3. CLI usage PART1
 
 ```bash
 # NL → LLM → GraphQL → GitHub API → JSON
@@ -50,7 +50,7 @@ If the package isn't installed, run via module:
 PYTHONPATH=src python3 -m gh_query.main "..."
 ```
 
-## 4. Run the 30-case eval
+## PART-2. Run the 30-case eval
 
 ```bash
 # All default models (gpt-5.4-mini, gemini-3.1-flash-lite-preview, qwen3.5:9b)
@@ -73,7 +73,7 @@ Pass threshold is 85 % (per `docs/EXAM_PROMPT.md` §2.4).
 The 30 ground-truth cases live in `scripts/eval_30_data.py` (canonical) and are mirrored in `docs/eval-30-cases.md` (human-readable).
 
 
-This README file contains the entire idea, so it may look somewhat disorganized.
+## This README file contains the entire idea, so it may look somewhat disorganized.
 
 PART-1
 Break it:
